@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_img"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadeScrollbars="false"
+        android:fillViewport="true"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbarThumbVertical="@drawable/scrollbar"
+        android:scrollbars="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top|center"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/favourites_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top|center"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+            <Button
+                android:id="@+id/kupujetensyf"
+                style="@style/buttonActive"
+                android:text="Kupuję \n ten syf" />
+
+            <Button
+                android:id="@+id/wsadzrolexa"
+                style="@style/buttonActive"
+                android:text="wsadz w dupe \n Rolexa" />
+
+            <Button
+                android:id="@+id/ekskluzywnewidowisko"
+                style="@style/buttonActive"
+                android:text="Ekskluzywne \n widowisko" />
+
+            <Button
+                android:id="@+id/bylynajdrozsze"
+                style="@style/buttonActive"
+                android:text="Byly \n najdroższe" />
+
+
+            <Button
+                android:id="@+id/niczymlord"
+                style="@style/buttonActive"
+                android:text="Niczym\n Lord" />
+
+            <Button
+                android:id="@+id/prestizowo"
+                style="@style/buttonActive"
+                android:text="Prestiżowo" />
+
+            <Button
+                android:id="@+id/zakladamRolexa"
+                style="@style/buttonActive"
+                android:text="Zakładam \n Rolexa" />
+
+            <Button
+                android:id="@+id/szacunek"
+                style="@style/buttonActive"
+                android:text="Szacunek do\n pieniędzy" />
+
+            <Button
+                android:id="@+id/parkowacsamochod"
+                style="@style/buttonActive"
+                android:text="Samochód należy\n parkować" />
+
+
+            <Button
+                android:id="@+id/jestemmarek"
+                style="@style/buttonActive"
+                android:text="siema jestem\n Marek" />
+
+
+            <Button
+                android:id="@+id/prostytutka"
+                style="@style/buttonActive"
+                android:text="prostytutka" />
+
+            <Button
+                android:id="@+id/blachara"
+                style="@style/buttonActive"
+                android:text="blachara" />
+
+
+            <Button
+                android:id="@+id/stosunek"
+                style="@style/buttonActive"
+                android:text="Codziennie" />
+
+            <Button
+                android:id="@+id/lustro"
+                style="@style/buttonActive"
+                android:text="Lustra używam\n do ogladania Rolexa" />
+
+
+            <Button
+                android:id="@+id/zasmiecackonta"
+                style="@style/buttonActive"
+                android:text="Zaśmiecanie\n konta" />
+
+            <Button
+                android:id="@+id/ledwo300"
+                style="@style/buttonActive"
+                android:text="Mało\n prestiżowy " />
+
+            <Button
+                android:id="@+id/przystepnacena"
+                style="@style/buttonActive"
+                android:text="przystępna \n cena" />
+
+            <Button
+                android:id="@+id/wiekliczba"
+                style="@style/buttonActive"
+                android:text="wiek to \n tylko liczba" />
+
+
+            <Button
+                android:id="@+id/rolexodmierzaczas"
+                style="@style/buttonActive"
+                android:text="Rolex odmierza \n czas na odpoczynek" />
+        </LinearLayout>
+    </ScrollView>
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-8349688339545762/8303335666">
+    </com.google.android.gms.ads.AdView>
+
+</RelativeLayout>
