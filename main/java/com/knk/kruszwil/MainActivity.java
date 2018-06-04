@@ -129,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
         getFileSaveDir();
 
 
-        //Check permissions :)
-        checkPermissions(this);
 
         //Associate buttons with sounds
         addSound(R.id.kupujetensyf, R.raw.kupujetensyf, "Kupuję ten syf, żeby Janusze dostali zawału.");
@@ -263,8 +261,8 @@ public class MainActivity extends AppCompatActivity {
                         soundMap.get(view).send(MainActivity.this, getApplicationContext(), fileSaveDir);
                         break;
                     case 2:
-                        dialog.dismiss();
-                        checkPermissions(getApplicationContext());
+
+                        
                         soundMap.get(view).setAsNotification(MainActivity.this, getApplicationContext(), fileSaveDir);
                         break;
 
@@ -325,6 +323,8 @@ public class MainActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getSaveDir();
+                    //Check permissions :)
+                    checkPermissions(this);
                 } else {
                     Toast.makeText(this,
                             "Aby móc pobierać dźwięki, wysyłać je, oraz ustawiać jako dźwięk powiadomień lub dzwonka, musisz udzielić aplikacji odpowiednich uprawnień",
