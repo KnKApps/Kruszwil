@@ -1,8 +1,11 @@
 package com.knk.kruszwil;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -11,6 +14,7 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -32,6 +36,7 @@ public class Sound {
     private Button button;
     private String caption;
     private MediaPlayer mp;
+    //Attributes specific for the standard version of the app
     private boolean isUnlocked;
     private boolean isPremiumOnly = false;
 
@@ -76,6 +81,7 @@ public class Sound {
     public Button getButton() {
         return button;
     }
+
     public boolean isUnlocked(){
         return isUnlocked;
     }
@@ -186,6 +192,42 @@ public class Sound {
                 file.delete();
             }
         }
+    }
+
+    //In loving memory of setKludeczka() [*]
+    public void setPadluck(final Context context) {
+        this.isPremiumOnly = true;
+        this.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("DŹWIĘK DOSTĘPNY TYLKO W WERSJI PRESTIŻOWEJ");
+                builder.setMessage("Aby odblokować dźwięk:\n"+caption+"\nPrzejdź na wersję prestiżową!");
+                builder.setPositiveButton("PRZEJDŹ DO GOOGLE PLAY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("market://details?id=com.knk.kruszwilprestiz"));
+                        context.startActivity(intent);
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton(":(", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+
+        });
+
+            this.button.setBackgroundResource(R.drawable.goldbuttonlocked);
+
     }
 
 

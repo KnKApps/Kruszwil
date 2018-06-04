@@ -2,6 +2,7 @@ package com.knk.kruszwil;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,9 +43,11 @@ public class MainActivity extends AppCompatActivity {
     public static SharedPreferences sharedPreferences;
     //Editor for SharedPreferences
     public static SharedPreferences.Editor editor;
+    //Ads!
     private RewardedVideoAd mRewardedAd;
     private AdView mAdView;
 
+    //Attributes specific for the standard version of the app
     public Sound toUnlock;
     public boolean wasAdActivated = false;
 
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Initialize ads and override all the methods required
         MobileAds.initialize(this, "ca-app-pub-8349688339545762~2580413300");
         mRewardedAd = MobileAds.getRewardedVideoAdInstance(this);
         mRewardedAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
@@ -125,19 +129,8 @@ public class MainActivity extends AppCompatActivity {
         getFileSaveDir();
 
 
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            // Check whether has the write settings permission or not.
-            boolean settingsCanWrite = Settings.System.canWrite(this);
-        
-
-            if(!settingsCanWrite) {
-                // If do not have write settings permission then open the Can modify system settings panel.
-                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                startActivity(intent);
-
-            }
-        }
+        //Check permissions :)
+        checkPermissions(this);
 
         //Associate buttons with sounds
         addSound(R.id.kupujetensyf, R.raw.kupujetensyf, "Kupuję ten syf, żeby Janusze dostali zawału.");
@@ -161,6 +154,11 @@ public class MainActivity extends AppCompatActivity {
         addSound(R.id.przystepnacena, R.raw.przystepnacena,  "Cena jak na kalkulator jest bardzo przystępna, bo kosztuje zaledwie półtora tysiąca złotych");
         addSound(R.id.wiekliczba, R.raw.wiekliczba,  "Wiek to tylko liczba");
         addSound(R.id.rolexodmierzaczas, R.raw.rolexodmierzaczas,  "Mój Rolex odmierza czas na odpoczynek");
+
+        //Set Premium Only Sounds
+        soundMap.get(findViewById(R.id.rolexodmierzaczas)).setPadluck(this);
+
+
     }
 
     //Associates button with sound
@@ -179,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //The addSound() version for locked sounds
     private void addSound(int buttonId, int soundId, String caption, boolean active) {
         Button button = findViewById(buttonId);
         final Sound sound = new Sound(soundId, button, caption, this.mp);
@@ -202,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Creates dialog for locked buttons
     public void createUnlockDialog(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if(!soundMap.get(view).isPremiumOnly()){
@@ -263,6 +263,8 @@ public class MainActivity extends AppCompatActivity {
                         soundMap.get(view).send(MainActivity.this, getApplicationContext(), fileSaveDir);
                         break;
                     case 2:
+                        dialog.dismiss();
+                        checkPermissions(getApplicationContext());
                         soundMap.get(view).setAsNotification(MainActivity.this, getApplicationContext(), fileSaveDir);
                         break;
 
@@ -332,7 +334,40 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Loads a video add to unlock a button
     private void loadRewardedVideoAd() {
         mRewardedAd.loadAd("ca-app-pub-8349688339545762/3873136064", new AdRequest.Builder().build());
+    }
+
+    //Checks necessary permissions
+    private void checkPermissions(Context context) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            // Check whether has the write settings permission or not.
+            boolean settingsCanWrite = Settings.System.canWrite(context);
+
+            if(!settingsCanWrite) {
+                // If do not have write settings permission then open the Can modify system settings panel.
+                createPermissionsDialog(context);
+
+            }
+        }
+    }
+
+    //Create a dialog to enter settings
+    private void createPermissionsDialog(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Uprawnienia");
+        builder.setMessage("Nadaj aplikacji niezbędne uprawnienia, aby móc korzystać z jej wszystkich funkcji.");
+        builder.setPositiveButton("PRZEJDŹ DO USTAWIEŃ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                startActivity(intent);
+            }
+        });
+
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
