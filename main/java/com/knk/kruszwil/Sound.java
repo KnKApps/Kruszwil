@@ -109,7 +109,7 @@ public class Sound {
                 fos.write(buffer, 0, count);
             }
 
-            Toast.makeText(context, "Utworzono plik \n" + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, "Utworzono plik \n" + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
 
 
         } catch (FileNotFoundException e) {

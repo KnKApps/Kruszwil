@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Creates a menu on long click
     private void createMenu(final View view) {
-        CharSequence[] options = {"POBIERZ", "WYŚLIJ MESSENGEREM", "USTAW JAKO POWIADOMIENIE"};
+        CharSequence[] options = {"WYŚLIJ MESSENGEREM", "USTAW JAKO POWIADOMIENIE"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Wybierz opcję:");
         builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -250,22 +250,23 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch(which) {
                     case 0:
-                        try {
-                            soundMap.get(view).download(getApplicationContext(), fileSaveDir);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-
-                    case 1:
                         soundMap.get(view).send(MainActivity.this, getApplicationContext(), fileSaveDir);
                         break;
-                    case 2:
+                    case 1:
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                            // Check whether has the write settings permission or not.
+                            boolean settingsCanWrite = Settings.System.canWrite(getApplicationContext());
 
-                        
+                            if(!settingsCanWrite) {
+                                // If do not have write settings permission, reload activity
+                                MainActivity.this.finish();
+                                startActivity(getIntent());
+                                break;
+
+                            }
+                        }
                         soundMap.get(view).setAsNotification(MainActivity.this, getApplicationContext(), fileSaveDir);
                         break;
-
                 }
             }
         });
