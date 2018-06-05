@@ -93,7 +93,7 @@ public class Sound {
         File file = null;
 
         try {
-            file = new File(dir, (String) button.getText() + ".mp3");
+            file = new File(dir, (String) button.getText() + " temporary.mp3");
             if (!file.exists() && !file.isDirectory()) {
                 file.createNewFile();
             }
@@ -137,10 +137,9 @@ public class Sound {
         File file;
         try {
             file = download(context, dir);
-            Uri uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".com.knk.kruszwilprestiz.provider", file);
+            Uri uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".com.knk.kruszwil.provider", file);
             ShareToMessengerParams shareToMessengerParams = ShareToMessengerParams.newBuilder(uri, "audio/mpeg").build();
             MessengerUtils.shareToMessenger(activity, 321, shareToMessengerParams);
-            file.delete();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -186,9 +185,9 @@ public class Sound {
     }
 
     //Deletes all notification sound files
-    private void deleteFiles(File dir) {
+    public static void deleteFiles(File dir) {
         for (File file : dir.listFiles()) {
-            if(file.getName().contains("notification.mp3")) {
+            if(file.getName().contains("temporary.mp3")) {
                 file.delete();
             }
         }
@@ -229,6 +228,7 @@ public class Sound {
             this.button.setBackgroundResource(R.drawable.goldbuttonlocked);
 
     }
+
 
 
 }

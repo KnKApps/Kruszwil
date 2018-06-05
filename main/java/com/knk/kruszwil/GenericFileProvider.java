@@ -1,4 +1,4 @@
-package com.knk.kruszwilprestiz;
+package com.knk.kruszwil;
 
 import android.support.v4.content.FileProvider;
 
