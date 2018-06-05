@@ -133,7 +133,10 @@
             <Button
                 android:id="@+id/rolexodmierzaczas"
                 style="@style/buttonActive"
-                android:text="Rolex odmierza \n czas na odpoczynek" />
+                android:text="Rolex odmierza \n czas na odpoczynek"
+                android:layout_marginBottom="80dp"
+                />
+
         </LinearLayout>
     </ScrollView>
     <com.google.android.gms.ads.AdView

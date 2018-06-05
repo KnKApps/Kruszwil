@@ -367,6 +367,9 @@ public class MainActivity extends AppCompatActivity {
                 createPermissionsDialog(context);
 
             }
+
+            //If first launch, show the dialog
+            createFirstLaunchDialog(context);
         }
     }
 
@@ -386,5 +389,31 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    //Shows only on first launch
+    private void createFirstLaunchDialog(Context context){
+        boolean isFirstLaunch = sharedPreferences.getBoolean("isFirstLaunch", true);
+        if (isFirstLaunch) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Witaj w Kruszwil Soundboard!");
+            builder.setMessage("Dziękujemy za pobranie! Wciśnij przycisk by odtworzyć dźwięk," +
+                    " przytrzymaj by skorzystać z dodatkowych funkcji. Miłej zabawy! :)");
+            builder.setPositiveButton("OKEJ!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            isFirstLaunch = false;
+            editor.putBoolean("isFirstLaunch", isFirstLaunch);
+            editor.commit();
+        }
+
+
+
     }
 }
