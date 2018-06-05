@@ -6,4 +6,5 @@
     <color name="colorButtonDefault">#b1e1e1e1</color>
     <color name="colorButtonPressed">#DDFFFFFF</color>
     <color name="colorButtonInactive">#e04d4d4d</color>
+    <color name="colorNavBar">#898989</color>
 </resources>

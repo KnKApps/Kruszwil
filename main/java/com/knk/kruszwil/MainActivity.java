@@ -55,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Navigation bar for Lollipop-and-above users
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorNavBar));
+        }
+
         //Initialize ads and override all the methods required
         MobileAds.initialize(this, "ca-app-pub-8349688339545762~2580413300");
         mRewardedAd = MobileAds.getRewardedVideoAdInstance(this);
@@ -128,6 +134,9 @@ public class MainActivity extends AppCompatActivity {
         //Create directory for app sounds
         getFileSaveDir();
 
+        //Delete temporary files
+        if(fileSaveDir != null) Sound.deleteFiles(fileSaveDir);
+
 
 
         //Associate buttons with sounds
@@ -157,6 +166,13 @@ public class MainActivity extends AppCompatActivity {
         soundMap.get(findViewById(R.id.rolexodmierzaczas)).setPadluck(this);
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Delete temporary files
+        if(fileSaveDir != null) Sound.deleteFiles(fileSaveDir);
     }
 
     //Associates button with sound
