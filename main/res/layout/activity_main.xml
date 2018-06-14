@@ -159,6 +159,7 @@
             <Button
                 android:id="@+id/ocochodzi"
                 style="@style/buttonActive"
+
                 android:text="O co Ci\nchodzi" />
 
             <Button
@@ -194,6 +195,11 @@
                 android:layout_marginBottom="70dp"
                 style="@style/buttonActive"
                 android:text="fekalia" />
+
+=======
+                android:text="Rolex odmierza \n czas na odpoczynek"
+                android:layout_marginBottom="80dp"
+                />
 
 
         </LinearLayout>
