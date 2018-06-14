@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
@@ -144,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
         addSound(R.id.wsadzrolexa, R.raw.wsadzrolexa,  "Wsadź w dupę Rolexa");
         addSound(R.id.bylynajdrozsze, R.raw.bylynajdrozsze,"Były najdroższe, dlatego je wziąłem");
         addSound(R.id.ekskluzywnewidowisko, R.raw.ekskluzywnewidowisko,  "To już czas na ekskluzywne widowisko");
-
         addSound(R.id.niczymlord, R.raw.niczymlord,  "Niczym lord");
         addSound(R.id.prestizowo, R.raw.prestizowo,  "Prestiżowo");
         addSound(R.id.zakladamRolexa, R.raw.zakladamroleksa,  "Zakładam Rolexa i wyrywam następną");
@@ -153,18 +154,37 @@ public class MainActivity extends AppCompatActivity {
         addSound(R.id.jestemmarek, R.raw.jestemmarek,  "Siema, jestem Marek, mam 16 lat");
         addSound(R.id.prostytutka, R.raw.prostytutka,  "Prostytutka");
         addSound(R.id.blachara, R.raw.blachara,  "Blachara");
-
-        addSound(R.id.stosunek, R.raw.stosunek,  "Codziennie odbywam stosunek seksualny z co najmniej jedną dziewczyną", false);
-        addSound(R.id.lustro, R.raw.lustro,  "Lustra używam do oglądania mojego Rolexa z dwóch stron", false);
-        addSound(R.id.zasmiecackonta, R.raw.zasmiecackonta,  "Nie zamierzam nawet zaśmiecać tym sobie konta");
-        addSound(R.id.ledwo300, R.raw.ledwo300,  "Trochę mało prestiżowy, ledwo 300 zł kosztuje");
-        addSound(R.id.przystepnacena, R.raw.przystepnacena,  "Cena jak na kalkulator jest bardzo przystępna, bo kosztuje zaledwie półtora tysiąca złotych");
-        addSound(R.id.wiekliczba, R.raw.wiekliczba,  "Wiek to tylko liczba");
+        addSound(R.id.donperignon, R.raw.donperignon1, "Don Perignon");
+        addSound(R.id.cotyzrobiles, R.raw.cotyzrobiles, "Co Ty zrobiłeś ?!");
         addSound(R.id.rolexodmierzaczas, R.raw.rolexodmierzaczas,  "Mój Rolex odmierza czas na odpoczynek");
+        addSound(R.id.lustro, R.raw.lustro,  "Lustra używam do oglądania mojego Rolexa z dwóch stron");
+        addSound(R.id.sluzacychodz, R.raw.sluzacychodz, "Służacy, chodź");
+
+
+        addSound(R.id.zapomnialesoczyms, R.raw.zapomnialesoczyms, "Zapomniałeś o czymś czy nie !?", false);
+        addSound(R.id.stosunek, R.raw.stosunek,  "Codziennie odbywam stosunek seksualny z co najmniej jedną dziewczyną", false);
+        addSound(R.id.zasmiecackonta, R.raw.zasmiecackonta,  "Nie zamierzam nawet zaśmiecać tym sobie konta", false);
+        addSound(R.id.ledwo300, R.raw.ledwo300,  "Trochę mało prestiżowy, ledwo 300 zł kosztuje", false);
+        addSound(R.id.przystepnacena, R.raw.przystepnacena,  "Cena jak na kalkulator jest bardzo przystępna, bo kosztuje zaledwie półtora tysiąca złotych", false);
+        addSound(R.id.wiekliczba, R.raw.wiekliczba,  "Wiek to tylko liczba", false);
+        addSound(R.id.jezykiobce, R.raw.jezykiobce, "Jeżeli nie znacie języków obcych, to wasz problem", false);
+        addSound(R.id.mocneslowa, R.raw.mocneslowa, "Muszę przyznać, że to dosyć mocne słowa jak na dwunastoletnią dziewczynkę", false);
+        addSound(R.id.ocochodzi, R.raw.ocochodzi, "Ej o co Ci chodzi ej ziom", false);
+        addSound(R.id.tanutabuja, R.raw.tanutabuja, "Ta nuta mną buja", false);
+
+
+        addSound(R.id.wartoscczlowieka, R.raw.wartoscczlowieka, "Wartość człowieka liczy się w dolarach amerykańskich");
+        addSound(R.id.obrzydliwe, R.raw.obrzydliwe, "Jest to obrzydliwe i na samą myśl robi mi się niedobrze");
+        addSound(R.id.fekalia, R.raw.fekalia, "Moje fekalia są warte około 200zł");
+
+
 
         //Set Premium Only Sounds
-        soundMap.get(findViewById(R.id.rolexodmierzaczas)).setPadluck(this);
-
+        soundMap.get(findViewById(R.id.mocneslowa)).setPadluck(MainActivity.this);
+        soundMap.get(findViewById(R.id.wsadzrolexa)).setPadluck(MainActivity.this);
+        soundMap.get(findViewById(R.id.wartoscczlowieka)).setPadluck(MainActivity.this);
+        soundMap.get(findViewById(R.id.obrzydliwe)).setPadluck(MainActivity.this);
+        soundMap.get(findViewById(R.id.fekalia)).setPadluck(MainActivity.this);
 
     }
 
@@ -383,6 +403,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    public void createAppInfoDialog(View view) {
+        PackageInfo packageInfo = null;
+
+        try {
+            packageInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Informacje o aplikacji");
+        builder.setMessage("Wersja: "+packageInfo.versionName+"\nKliknij DODAJ DŹWIĘK, aby przejść do formularza i dodać własną propozycję nowego, prestiżowego dźwięku!");
+        builder.setPositiveButton("ZAMKNIJ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("DODAJ DŹWIĘK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://kruszwil.000webhostapp.com/")));
+            }
+        });
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
