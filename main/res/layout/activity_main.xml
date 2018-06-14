@@ -39,10 +39,6 @@
                 style="@style/buttonActive"
                 android:text="Kupuję \n ten syf" />
 
-            <Button
-                android:id="@+id/wsadzrolexa"
-                style="@style/buttonActive"
-                android:text="wsadz w dupe \n Rolexa" />
 
             <Button
                 android:id="@+id/ekskluzywnewidowisko"
@@ -97,17 +93,42 @@
                 style="@style/buttonActive"
                 android:text="blachara" />
 
+            <Button
+                android:id="@+id/lustro"
+                style="@style/buttonActive"
+                android:text="Lustra używam\n do ogladania Rolexa" />
+            <Button
+                android:id="@+id/rolexodmierzaczas"
+                style="@style/buttonActive"
+                android:text="Rolex odmierza \n czas na odpoczynek" />
+
+            <Button
+                android:id="@+id/cotyzrobiles"
+                style="@style/buttonActive"
+                android:text="Co Ty zrobiłeś" />
+
+            <Button
+                android:id="@+id/donperignon"
+                style="@style/buttonActive"
+                android:text="Don Perignon" />
+
+            <Button
+                android:id="@+id/sluzacychodz"
+                style="@style/buttonActive"
+                android:text="Służący, chodź" />
+
+
+
+
+            <Button
+                android:id="@+id/zapomnialesoczyms"
+                style="@style/buttonActive"
+                android:text="Zapomniałeś o czymś" />
 
             <Button
                 android:id="@+id/stosunek"
                 style="@style/buttonActive"
                 android:text="Codziennie" />
-
-            <Button
-                android:id="@+id/lustro"
-                style="@style/buttonActive"
-                android:text="Lustra używam\n do ogladania Rolexa" />
-
 
             <Button
                 android:id="@+id/zasmiecackonta"
@@ -129,13 +150,57 @@
                 style="@style/buttonActive"
                 android:text="wiek to \n tylko liczba" />
 
+            <Button
+                android:id="@+id/jezykiobce"
+                style="@style/buttonActive"
+                android:text="Języki obce " />
+
 
             <Button
-                android:id="@+id/rolexodmierzaczas"
+                android:id="@+id/ocochodzi"
                 style="@style/buttonActive"
+
+                android:text="O co Ci\nchodzi" />
+
+            <Button
+                android:id="@+id/tanutabuja"
+                style="@style/buttonActive"
+                android:text="Ta nuta\nmną buja" />
+
+
+
+
+            <Button
+                android:id="@+id/mocneslowa"
+                style="@style/buttonActive"
+                android:text="Mocne słowa" />
+
+            <Button
+                android:id="@+id/wsadzrolexa"
+                style="@style/buttonActive"
+                android:text="wsadz w dupe \n Rolexa" />
+
+            <Button
+                android:id="@+id/wartoscczlowieka"
+                style="@style/buttonActive"
+                android:text="Wartość człowieka" />
+
+            <Button
+                android:id="@+id/obrzydliwe"
+                style="@style/buttonActive"
+                android:text="Obrzydliwe " />
+
+            <Button
+                android:id="@+id/fekalia"
+                android:layout_marginBottom="70dp"
+                style="@style/buttonActive"
+                android:text="fekalia" />
+
+=======
                 android:text="Rolex odmierza \n czas na odpoczynek"
                 android:layout_marginBottom="80dp"
                 />
+
 
         </LinearLayout>
     </ScrollView>
@@ -149,5 +214,27 @@
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-8349688339545762/8303335666">
     </com.google.android.gms.ads.AdView>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="left">
+
+        <Button
+            android:id="@+id/info_button"
+            android:alpha="0.7"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="left"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_info"
+            android:onClick="createAppInfoDialog" />
+
+
+    </RelativeLayout>
 
 </RelativeLayout>
