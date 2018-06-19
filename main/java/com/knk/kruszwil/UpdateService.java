@@ -86,7 +86,7 @@ public class UpdateService extends Service {
             };
 
 
-            timer.schedule(timerTask,0,10000);
+            timer.schedule(timerTask,0, 14400000);
 
 
         Log.i("SERVICE", "started");
