@@ -496,7 +496,8 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-=======
+    }
+    
     //Shows only on first launch
     private void createFirstLaunchDialog(Context context){
         boolean isFirstLaunch = sharedPreferences.getBoolean("isFirstLaunch", true);
