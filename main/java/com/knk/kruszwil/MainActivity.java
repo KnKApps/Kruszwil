@@ -2,6 +2,7 @@ package com.knk.kruszwil;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,10 +55,17 @@ public class MainActivity extends AppCompatActivity {
     public Sound toUnlock;
     public boolean wasAdActivated = false;
 
+    private FirebaseAnalytics firebaseAnalytics;
+
+    Intent serviceIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
 
         //Navigation bar for Lollipop-and-above users
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -102,6 +111,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         buttonOnClick(view);
+                    }
+                });
+
+                toUnlock.getButton().setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        createMenu(v);
+                        return true;
                     }
                 });
                 wasAdActivated=false;
@@ -186,6 +203,21 @@ public class MainActivity extends AppCompatActivity {
         soundMap.get(findViewById(R.id.obrzydliwe)).setPadluck(MainActivity.this);
         soundMap.get(findViewById(R.id.fekalia)).setPadluck(MainActivity.this);
 
+
+        //Updater
+        serviceIntent = new Intent(this, UpdateService.class);
+        if (!isMyServiceRunning(UpdateService.class)) startService(serviceIntent);
+    }
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i ("isMyServiceRunning?", true+"");
+                return true;
+            }
+        }
+        Log.i ("isMyServiceRunning?", false+"");
+        return false;
     }
 
     @Override
@@ -211,6 +243,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        stopService(serviceIntent);
+        super.onDestroy();
+    }
+
     //The addSound() version for locked sounds
     private void addSound(int buttonId, int soundId, String caption, boolean active) {
         Button button = findViewById(buttonId);
@@ -232,6 +270,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             button.setBackgroundResource(R.drawable.inactivebutton_bg);
+        } else {
+            button.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    createMenu(v);
+                    return true;
+                }
+            });
         }
     }
 
@@ -286,6 +332,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch(which) {
                     case 0:
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                            // Check whether has the write settings permission or not.
+                            boolean settingsCanWrite = Settings.System.canWrite(getApplicationContext());
+
+                            if(!settingsCanWrite) {
+                                // If do not have write settings permission, reload activity
+                                MainActivity.this.finish();
+                                startActivity(getIntent());
+                                break;
+
+                            }
+                        }
                         soundMap.get(view).send(MainActivity.this, getApplicationContext(), fileSaveDir);
                         break;
                     case 1:
