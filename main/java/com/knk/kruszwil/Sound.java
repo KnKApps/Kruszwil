@@ -186,9 +186,11 @@ public class Sound {
 
     //Deletes all notification sound files
     public static void deleteFiles(File dir) {
-        for (File file : dir.listFiles()) {
-            if(file.getName().contains("temporary.mp3")) {
-                file.delete();
+        if (dir.listFiles() != null) {
+            for (File file : dir.listFiles()) {
+                if (file.getName().contains("temporary.mp3")) {
+                    file.delete();
+                }
             }
         }
     }
